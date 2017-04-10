@@ -1,0 +1,90 @@
+version: "3"
+
+services:
+
+  proxy:
+    image: nginx-voting:0.1.0
+    container_name: nginx
+    ports:
+      - 80:80
+    labels:
+      - SERVICE_IGNORE=true
+    dns:
+      - 172.18.0.1
+      - 8.8.8.8
+  
+  consul:
+    image: consul:0.8.0
+    container_name: consul
+    ports:
+      - 8500:8500
+      - 53:8600/udp
+      - 8400:8400
+    labels:
+      - SERVICE_IGNORE=true
+    dns:
+      - 172.18.0.1
+      - 8.8.8.8      
+
+  registrator:
+    depends_on:
+      - consul
+    image: gliderlabs/registrator:latest
+    container_name: registrator
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: ["-internal=true", "consul://172.17.0.1:8500"]
+
+  registratorkv:
+      depends_on:
+        - consul
+      image: gliderlabs/registrator:latest
+      container_name: registratorkv
+      volumes:
+        - /var/run/docker.sock:/tmp/docker.sock
+      command: ["-internal=true", "consulkv://172.17.0.1:8500/services"]
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports: ["6379"]
+    depends_on:
+      - registrator
+    labels:
+      - SERVICE_6379_CHECK_TCP=true
+    dns:
+      - 172.18.0.1
+      - 8.8.8.8      
+
+  results:
+    image: results:0.1.1
+    container_name: results
+    depends_on:
+      - registrator
+      - redis
+    ports: ["8000"]
+    environment:
+      REDIS_HOST: redis
+      WEB_HOST: 0.0.0.0
+    dns:
+      - 172.18.0.1
+      - 8.8.8.8    
+
+  vote:
+    image: vote:0.1.1
+    container_name: vote
+    depends_on:
+      - registrator
+      - redis
+    ports: ["3000"]
+    environment:
+      REDIS_HOST: redis
+      HTTP_HOST: 0.0.0.0
+    dns:
+      - 172.18.0.1
+      - 8.8.8.8
+  
+
+
+
+
