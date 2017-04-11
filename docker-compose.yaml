@@ -3,7 +3,7 @@ version: "3"
 services:
 
   proxy:
-    image: nginx-voting:0.1.0
+    image: jpweber/nginx-voting:0.1.0
     container_name: nginx
     ports:
       - 80:80
@@ -57,7 +57,7 @@ services:
       - 8.8.8.8      
 
   results:
-    image: results:0.1.1
+    image: jpweber/results:0.1.1
     container_name: results
     depends_on:
       - registrator
@@ -71,7 +71,7 @@ services:
       - 8.8.8.8    
 
   vote:
-    image: vote:0.1.1
+    image: jpweber/vote:0.1.1
     container_name: vote
     depends_on:
       - registrator
