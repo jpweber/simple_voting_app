@@ -1,6 +1,6 @@
 # Voting Application 
 
- ![voting diagram](voting diagram.png)
+ ![voting diagram](https://github.com/jpweber/simple_voting_app/blob/eval/voting%20diagram.png?raw=true)
 
 
 
