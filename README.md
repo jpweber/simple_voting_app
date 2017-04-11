@@ -1,5 +1,9 @@
 # Voting Application 
 
+ ![voting diagram](voting diagram.png)
+
+
+
 ## How to Run
 
 To start up the stack on a single machine in the application repo directory run the following: `docker-compose up` 
@@ -46,7 +50,7 @@ Containers are registered witih consul through registrator. Registrator runs on 
 
 
 
-## LInks to software used
+## Links to software used
 
 confd - https://github.com/kelseyhightower/confd
 
