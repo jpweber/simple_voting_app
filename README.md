@@ -18,19 +18,19 @@ The voting page can be reached via http://localhost/vote. However the domain nam
 
 The infrascture for this application includes the following components Implemented as containers.
 
-— Ingress reverse Proxy
+* Ingress reverse Proxy
 
-​	— nginx
+  ​	— nginx
 
-—  service discovery system and key value store independent of applications ran on cluster.
+* service discovery system and key value store independent of applications ran on cluster.
 
-​	— consul
+  ​	— consul
 
-— service discovery registration
+* service discovery registration
 
-​	— registrator
+  ​	— registrator
 
-— the application itself including data store
+* the application itself including data store
 
 ### Ingress Reverse Proxy
 
