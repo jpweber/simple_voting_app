@@ -1,0 +1,11 @@
+FROM node:7.8-alpine
+ARG EXPOSE_PORT=3000
+LABEL SERVICE_${EXPOSE_PORT}_CHECK_TCP=true
+COPY . /app
+WORKDIR /app
+
+RUN npm install
+
+EXPOSE $EXPOSE_PORT
+ENTRYPOINT ["node"]
+CMD ["."]
